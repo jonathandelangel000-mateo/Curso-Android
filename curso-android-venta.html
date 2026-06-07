@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso Taller Android — Guía Completa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #3ddc84;
+    --green-dark: #2aad63;
+    --green-light: #e8fdf2;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --white: #ffffff;
+    --bg: #f9fafb;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    width: 28px; height: 28px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .nav-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 50px;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero-label {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .hero h1 span {
+    color: var(--green-dark);
+    font-style: italic;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 32px;
+    font-weight: 300;
+  }
+
+  /* ── ROBOT SVG ── */
+  .robot-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 40px;
+  }
+  .robot-wrap svg {
+    filter: drop-shadow(0 8px 24px rgba(61,220,132,.25));
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ── CTA CARD ── */
+  .cta-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 420px;
+    margin: 0 auto 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.05);
+  }
+  .price-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .price-main {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--text);
+  }
+  .price-currency {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .price-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .btn-buy {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: var(--white);
+    text-align: center;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(61,220,132,.35);
+    cursor: pointer;
+    border: none;
+  }
+  .btn-buy:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(61,220,132,.4);
+  }
+  .btn-buy:active { transform: translateY(0); }
+  .secure-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 14px;
+  }
+  .secure-note svg { flex-shrink: 0; }
+
+  /* ── CONTENIDO ── */
+  .section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    letter-spacing: -0.5px;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  /* ── TEMAS ── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 480px) { .topics-grid { grid-template-columns: 1fr; } }
+  .topic-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .topic-item:hover {
+    border-color: var(--green);
+    box-shadow: 0 2px 12px rgba(61,220,132,.1);
+  }
+  .topic-icon {
+    width: 32px; height: 32px;
+    background: var(--green-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .topic-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .topic-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── INCLUYE ── */
+  .includes-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .includes-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .check {
+    width: 22px; height: 22px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .check svg { stroke: white; }
+
+  /* ── PARA QUIÉN ── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 500px) { .audience-grid { grid-template-columns: 1fr; } }
+  .audience-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .audience-emoji { font-size: 28px; margin-bottom: 8px; }
+  .audience-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .audience-desc { font-size: 12px; color: var(--text-muted); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    background: var(--text);
+    color: var(--white);
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .footer-cta h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .footer-cta p {
+    font-size: 15px;
+    opacity: .6;
+    margin-bottom: 28px;
+  }
+  .btn-buy-white {
+    display: inline-block;
+    background: var(--green);
+    color: var(--white);
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, transform .15s;
+    box-shadow: 0 4px 20px rgba(61,220,132,.4);
+  }
+  .btn-buy-white:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 20px 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  footer span { color: var(--green-dark); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🤖</div>
+  <div class="nav-title">Curso Taller Android</div>
+  <div class="nav-badge">PDF Digital</div>
+</nav>
+
+<!-- HERO -->
+<div style="background:var(--white); border-bottom:1px solid var(--border);">
+<div class="hero">
+  <div class="hero-label">📱 Guía Completa para Principiantes</div>
+
+  <!-- Robot SVG -->
+  <div class="robot-wrap">
+    <svg width="90" height="110" viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- antenas -->
+      <line x1="30" y1="18" x2="20" y2="6" stroke="#3ddc84" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="20" cy="5" r="4" fill="#3ddc84"/>
+      <line x1="60" y1="18" x2="70" y2="6" stroke="#3ddc84" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="70" cy="5" r="4" fill="#3ddc84"/>
+      <!-- cabeza -->
+      <rect x="18" y="18" width="54" height="34" rx="16" fill="#3ddc84"/>
+      <!-- ojos -->
+      <circle cx="34" cy="33" r="6" fill="white"/>
+      <circle cx="56" cy="33" r="6" fill="white"/>
+      <circle cx="34" cy="33" r="3" fill="#1a6b3c"/>
+      <circle cx="56" cy="33" r="3" fill="#1a6b3c"/>
+      <!-- cuerpo -->
+      <rect x="14" y="56" width="62" height="36" rx="10" fill="#3ddc84"/>
+      <!-- botones cuerpo -->
+      <circle cx="35" cy="70" r="4" fill="white" opacity="0.5"/>
+      <circle cx="45" cy="70" r="4" fill="white" opacity="0.5"/>
+      <circle cx="55" cy="70" r="4" fill="white" opacity="0.5"/>
+      <!-- brazos -->
+      <rect x="0" y="58" width="12" height="26" rx="6" fill="#3ddc84"/>
+      <rect x="78" y="58" width="12" height="26" rx="6" fill="#3ddc84"/>
+      <!-- piernas -->
+      <rect x="22" y="94" width="16" height="16" rx="6" fill="#3ddc84"/>
+      <rect x="52" y="94" width="16" height="16" rx="6" fill="#3ddc84"/>
+    </svg>
+  </div>
+
+  <h1>Todo lo que necesitas<br>saber sobre <span>Android</span></h1>
+  <p>La guía definitiva para entender Android desde cero: su historia, arquitectura, desarrollo de apps y mucho más.</p>
+
+  <!-- CTA CARD -->
+  <div class="cta-card">
+    <div class="price-row">
+      <div class="price-currency">$</div>
+      <div class="price-main">1</div>
+      <div class="price-currency">MXN</div>
+    </div>
+    <div class="price-note">Pago único · Acceso inmediato · PDF descargable</div>
+    <a href="https://buy.stripe.com/test_dRmfZggPif4y00q76ueZ200" class="btn-buy" target="_blank">
+      Obtener el Ebook ahora →
+    </a>
+    <div class="secure-note">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Pago seguro con Stripe · Garantía de satisfacción
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TEMAS -->
+<div class="section">
+  <div class="section-label">Contenido del Ebook</div>
+  <h2>Lo que aprenderás en esta guía</h2>
+  <div class="topics-grid">
+    <div class="topic-item">
+      <div class="topic-icon">📖</div>
+      <div>
+        <div class="topic-title">Historia de Android</div>
+        <div class="topic-desc">Desde 2003 hasta hoy, cómo Google transformó el mundo móvil.</div>
+      </div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-icon">🏗️</div>
+      <div>
+        <div class="topic-title">Arquitectura del sistema</div>
+        <div class="topic-desc">Kernel, librerías, runtime Dalvik y application framework explicados.</div>
+      </div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-icon">💻</div>
+      <div>
+        <div class="topic-title">Desarrollo de Apps</div>
+        <div class="topic-desc">Java + Android SDK para crear tus primeras aplicaciones nativas.</div>
+      </div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-icon">📱</div>
+      <div>
+        <div class="topic-title">Versiones de Android</div>
+        <div class="topic-desc">De Apple Pie a Oreo, toda la historia de versiones y sus nombres.</div>
+      </div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-icon">🔓</div>
+      <div>
+        <div class="topic-title">Root y Bootloader</div>
+        <div class="topic-desc">Qué significan, cómo funcionan y cuándo usarlos.</div>
+      </div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-icon">🛠️</div>
+      <div>
+        <div class="topic-title">Herramientas clave</div>
+        <div class="topic-desc">ADB, ODIN, Titanium Backup, Flash y más explicados claramente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- INCLUYE -->
+<div class="section">
+  <div class="section-label">¿Qué incluye?</div>
+  <h2>Todo en un solo archivo</h2>
+  <ul class="includes-list">
+    <li>
+      <div class="check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      PDF completo del Curso Taller Android por Enmanuel Cruz
+    </li>
+    <li>
+      <div class="check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      Enciclopedia de términos Android (ADB, APK, Root, ROM, OTA y más)
+    </li>
+    <li>
+      <div class="check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      Guía de arquitectura en capas del sistema operativo
+    </li>
+    <li>
+      <div class="check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      Descarga instantánea después del pago · Sin suscripciones
+    </li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- PARA QUIÉN -->
+<div class="section">
+  <div class="section-label">¿Para quién es?</div>
+  <h2>Ideal si eres...</h2>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="audience-emoji">🎓</div>
+      <div class="audience-title">Estudiante</div>
+      <div class="audience-desc">Aprende los fundamentos de Android para tu carrera en sistemas.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-emoji">👨‍💻</div>
+      <div class="audience-title">Desarrollador</div>
+      <div class="audience-desc">Entiende la base del sistema antes de lanzarte al código.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-emoji">📱</div>
+      <div class="audience-title">Usuario curioso</div>
+      <div class="audience-desc">¿Quieres saber qué pasa dentro de tu teléfono Android?</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <h2>Empieza hoy por $1 MXN</h2>
+  <p>Sin riesgos. Descarga inmediata. Un solo pago.</p>
+  <a href="https://buy.stripe.com/test_dRmfZggPif4y00q76ueZ200" class="btn-buy-white" target="_blank">
+    Comprar ahora — $1 MXN →
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Curso Taller Android · Pago procesado por <span>Stripe</span> · Producto digital · No hay devoluciones físicas</p>
+</footer>
+
+</body>
+</html>
